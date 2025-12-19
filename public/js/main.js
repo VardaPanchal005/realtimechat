@@ -36,8 +36,22 @@ chatForm.addEventListener('submit', e => {
 
 function outputMessage(message) {
     const div = document.createElement('div');
-    div.innerHTML = `<p class="meta">${message.username}<span>${message.time}</span></p>
-    <p class="text">${message.text}</p>`;
+
+    const meta = document.createElement('p');
+    meta.className = 'meta';
+    meta.textContent = message.username;
+
+    const timeSpan = document.createElement('span');
+    timeSpan.textContent = message.time;
+    meta.appendChild(timeSpan);
+
+    const text = document.createElement('p');
+    text.className = 'text';
+    text.textContent = message.text;
+
+    div.appendChild(meta);
+    div.appendChild(text);
+
     chatMessages.appendChild(div);
 }
 
@@ -46,5 +60,12 @@ function outputRoomName(room){
 }
 
 function outputUsers(users){
-    userList.innerHTML=`${users.map(user=>`<li>${user.username}</li>`).join('')}`
+    // Clear existing list items
+    userList.innerHTML = '';
+
+    users.forEach(user => {
+        const li = document.createElement('li');
+        li.textContent = user.username;
+        userList.appendChild(li);
+    });
 }
